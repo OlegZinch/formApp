@@ -1,14 +1,12 @@
 'use client'
 
 import React, { FC, useActionState } from 'react'
-import { useFormStatus } from 'react-dom'
 
 import { singInUser, type FormState } from '@/lib/actions'
 import { FORM_STATUS } from '@/constants/status'
 
 const Form: FC = () => {
-  const { pending } = useFormStatus()
-  const [state, formAction] = useActionState(singInUser, {
+  const [state, formAction, isPending] = useActionState(singInUser, {
     message: null,
   } as FormState)
 
@@ -39,9 +37,9 @@ const Form: FC = () => {
       <button
         className='p-2 border border-gray-400 rounded-sm self-center hover:bg-gray-200 cursor-pointer disabled:opacity-75'
         type='submit'
-        disabled={pending}
+        disabled={isPending}
       >
-        {pending ? 'Submitting...' : 'Submit'}
+        {isPending ? 'Submitting...' : 'Submit'}
       </button>
     </form>
   )
